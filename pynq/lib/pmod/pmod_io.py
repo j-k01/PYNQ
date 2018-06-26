@@ -92,14 +92,14 @@ class Pmod_IO(Pmod_DevMode):
         
         if self.direction == 'in':
             cur_val = self.read_cmd(PMOD_DIO_BASEADDR +
-                                    PMOD_DIO_DATA_OFFSET)
+                                    PMOD_DIO_TRI_OFFSET)
             new_val = cur_val | (0x1 << self.index)
             self.write_cmd(PMOD_DIO_BASEADDR +
                            PMOD_DIO_TRI_OFFSET,
                            new_val)
         else:
             cur_val = self.read_cmd(PMOD_DIO_BASEADDR +
-                                    PMOD_DIO_DATA_OFFSET)
+                                    PMOD_DIO_TRI_OFFSET)
             new_val = cur_val & ~(0x1 << self.index)
             self.write_cmd(PMOD_DIO_BASEADDR +
                            PMOD_DIO_TRI_OFFSET,
