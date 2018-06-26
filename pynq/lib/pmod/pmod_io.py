@@ -89,14 +89,21 @@ class Pmod_IO(Pmod_DevMode):
         self.index = index
         self.direction = direction
         self.start()
+        
         if self.direction == 'in':
+            cur_val = self.read_cmd(PMOD_DIO_BASEADDR +
+                                    PMOD_DIO_DATA_OFFSET)
+            new_val = cur_val | (0x1 << self.index)
             self.write_cmd(PMOD_DIO_BASEADDR +
                            PMOD_DIO_TRI_OFFSET,
-                           PMOD_CFG_DIO_ALLINPUT)
+                           new_val)
         else:
+            cur_val = self.read_cmd(PMOD_DIO_BASEADDR +
+                                    PMOD_DIO_DATA_OFFSET)
+            new_val = cur_val & ~(0x1 << self.index)
             self.write_cmd(PMOD_DIO_BASEADDR +
                            PMOD_DIO_TRI_OFFSET,
-                           PMOD_CFG_DIO_ALLOUTPUT)
+                           new_val)
 
     def write(self, value): 
         """Send the value to the offboard Pmod IO device.
